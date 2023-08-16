@@ -1,0 +1,17 @@
+#!/bin/bash
+
+IFS="$(printf '\n\t')"
+controlchars="$(printf '*[\001-\037\177]*')"
+
+#convert $in -resize 1024x1024 $out
+
+files=( $(find . -type f ! -name "$controlchars" -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg") )
+
+#echo "$files"
+
+i=$(echo "${#files[@]}" | bc)
+
+for ((x=0; x < i; x++)); do
+	echo "Processing ${files[x]}"
+	backgroundremover -i "${files[$x]}" -o "${files[$x]}-nobg.png"
+done
