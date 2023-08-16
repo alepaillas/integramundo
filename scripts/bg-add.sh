@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # depends on
-# https://github.com/nadermx/backgroundremover
+# - imagemagick
 
 # escape bad filenames
 IFS="$(printf '\n\t')"
@@ -16,5 +16,5 @@ i=$(echo "${#files[@]}" | bc)
 
 for ((x=0; x < i; x++)); do
 	echo "Processing ${files[x]}"
-	backgroundremover -i "${files[$x]}" -o "${files[$x]}-nobg.png"
+	#convert "${files[$x]}" -resize 1024x1024 "${files[$x]}-bg.png"
 done
