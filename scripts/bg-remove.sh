@@ -16,5 +16,5 @@ i=$(echo "${#files[@]}" | bc)
 
 for ((x=0; x < i; x++)); do
 	echo "Processing ${files[x]}"
-	backgroundremover -i "${files[$x]}" -o "${files[$x]}-nobg.png"
+	backgroundremover -i "${files[x]}" -o "${files[x]}-nobg.png"
 done

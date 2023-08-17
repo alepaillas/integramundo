@@ -16,5 +16,5 @@ i=$(echo "${#files[@]}" | bc)
 
 for ((x=0; x < i; x++)); do
 	echo "Processing ${files[x]}"
-	magick composite -gravity center bg.png "${files[x]}" "${files[x]}-bg.png"
+	magick composite -watermark 50 -gravity center logo.png "${files[x]}" "${files[x]}-wmark.png"
 done
