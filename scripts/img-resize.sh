@@ -16,5 +16,5 @@ i=$(echo "${#files[@]}" | bc)
 
 for ((x=0; x < i; x++)); do
 	echo "Processing ${files[x]}"
-	magick "${files[x]}" -resize 1024x1024 "${files[x]}-1024x1024.png"
+	convert "${files[x]}" -resize 1500x1500 "${files[x]}-1500px.png"
 done

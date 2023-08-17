@@ -16,5 +16,5 @@ i=$(echo "${#files[@]}" | bc)
 
 for ((x=0; x < i; x++)); do
 	echo "Processing ${files[x]}"
-	magick "${files[x]}" -trim +repage "${files[x]}-trim.png"
+	convert "${files[x]}" -fuzz 6% -trim +repage "${files[x]}-trim.png"
 done
