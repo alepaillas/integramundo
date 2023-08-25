@@ -16,5 +16,7 @@ i=$(echo "${#files[@]}" | bc)
 
 for ((x=0; x < i; x++)); do
 	echo "Processing ${files[x]}"
+	
+	# can't operate on the same file it has to create a copy
 	backgroundremover -i "${files[x]}" -o "${files[x]}-nobg.png"
 done
