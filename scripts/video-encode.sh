@@ -4,7 +4,7 @@
 AAC_ENCODER=aac
 
 AUDIO_PARAMS="-c:a $AAC_ENCODER -profile:a aac_low -b:a 384k"
-VIDEO_PARAMS="-pix_fmt yuv420p -c:v libx264 -profile:v high -preset slow -crf 18 -g 14,985 -bf 2"
+VIDEO_PARAMS="-pix_fmt yuv420p -c:v libx264 -profile:v high -preset slow -crf 18 -g 14.985 -bf 2"
 CONTAINER_PARAMS="-movflags faststart"
 
 # You need to adjust the GOP length to fit your source video.
