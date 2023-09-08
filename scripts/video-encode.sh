@@ -14,4 +14,4 @@ CONTAINER_PARAMS="-movflags faststart"
 
 # ffmpeg -i "$1" $AUDIO_PARAMS $VIDEO_PARAMS $CONTAINER_PARAMS "$2"
 # ffmpeg -i "$1" $AUDIO_PARAMS $VIDEO_PARAMS -vf "hqdn3d" $CONTAINER_PARAMS "$2"
-ffmpeg -framerate 29.97 -pattern_type glob -i "*.png" -i "$1" $AUDIO_PARAMS -shortest $VIDEO_PARAMS -vf "hqdn3d" $CONTAINER_PARAMS "$2"
+ffmpeg -framerate 29.97 -pattern_type glob -i "*.png" -i "$1" $AUDIO_PARAMS -shortest $VIDEO_PARAMS -vf "hqdn3d , unsharp=3:3:1.5" $CONTAINER_PARAMS "$2"

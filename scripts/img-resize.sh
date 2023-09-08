@@ -21,5 +21,5 @@ i=$(echo "${#files[@]}" | bc)
 for ((x=0; x < i; x++)); do
 	echo "Processing ${files[x]}"
 	#convert "${files[x]}" -resize 1500x1500 "${files[x]}-1500px.png"
-	convert "${files[x]}" -resize 1500x1500 "$wd"/resized-img/"${files[x]}"
+	convert "${files[x]}" -resize "$1" "$wd"/resized-img/"${files[x]}"
 done

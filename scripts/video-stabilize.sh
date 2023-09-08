@@ -16,6 +16,6 @@
 # ffmpeg -i "$1" $AUDIO_PARAMS $VIDEO_PARAMS -vf "hqdn3d" $CONTAINER_PARAMS "$2"
 # ffmpeg -framerate 29.97 -pattern_type glob -i "*.png" -i "$1" $AUDIO_PARAMS -shortest $VIDEO_PARAMS -vf "hqdn3d" $CONTAINER_PARAMS "$2"
 
-ffmpeg -i "$1" -vf vidstabdetect=shakiness=5 -f null -
+ffmpeg -i "$1" -vf vidstabdetect=shakiness=10 -f null -
 
-ffmpeg -i "$1" -vf vidstabtransform=smoothing=10:zoom=0:input="transforms.trf" "$1"-stab.mp4
+ffmpeg -i "$1" -vf vidstabtransform=smoothing=5:zoom=0:input="transforms.trf" "$1"-stab.mp4
