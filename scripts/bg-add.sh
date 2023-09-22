@@ -14,12 +14,12 @@ files=( $(find . -maxdepth 1 -type f ! -name "$controlchars" ! -iname "logo.png"
 
 #echo "$files"
 
-mkdir "$wd"/bg-added
+mkdir "$wd"/added-bg
 
 i=$(echo "${#files[@]}" | bc)
 
 for ((x=0; x < i; x++)); do
 	echo "Processing ${files[x]}"
 	#convert -composite -gravity center bg.png "${files[x]}" "${files[x]}-bg.png"
-	convert -composite -gravity center bg.png "${files[x]}" "$wd"/bg-added/"${files[x]}"
+	convert -composite -gravity center /mnt/c/Users/venta/ale/img-db/bg.png "${files[x]}" "$wd"/added-bg/"${files[x]}"
 done
