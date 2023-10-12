@@ -73,7 +73,7 @@ r = tune_color(i,AA(1,:),ii,M,mask);
 %plot(ee); figure;
 
 % comment out the below line to enable regrain artefact remover
-% r = regrain(i,r);
+r = regrain(i,r);
 
 end
 
