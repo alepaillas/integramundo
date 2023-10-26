@@ -20,6 +20,6 @@ i=$(echo "${#files[@]}" | bc)
 for ((x=0; x < i; x++)); do
 	echo "Processing ${files[x]}"
 	#convert -composite -gravity center "${files[x]}" logo.png "${files[x]}-logo.png"
-	#convert -composite -gravity center "${files[x]}" /mnt/usb/work/img-db/logo.png "$wd"/added-fg/"${files[x]}"
-	convert -composite -gravity center "${files[x]}" /mnt/d/work/img-db/logo.png "$wd"/added-fg/"${files[x]}"
+	convert -composite -gravity center "${files[x]}" /mnt/usb/work/img-db/logo.png "$wd"/added-fg/"${files[x]}"
+	#convert -composite -gravity center "${files[x]}" /mnt/d/work/img-db/logo.png "$wd"/added-fg/"${files[x]}"
 done

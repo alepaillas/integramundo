@@ -24,13 +24,13 @@ controlchars="$(printf '*[\001-\037\177]*')"
 #	${BASH_SOURCE%/*}/fg-add.sh
 #done
 
-echo "Working on $(pwd)"
-${BASH_SOURCE%/*}/convert-to-png.sh
-cd converted-to-png
+#echo "Working on $(pwd)"
+#${BASH_SOURCE%/*}/convert-to-png.sh
+#cd converted-to-png
 
-echo "Working on $(pwd)"
-${BASH_SOURCE%/*}/bg-remove.sh
-cd bg-removed
+#echo "Working on $(pwd)"
+#${BASH_SOURCE%/*}/bg-remove.sh
+#cd bg-removed
 
 echo "Working on $(pwd)"
 ${BASH_SOURCE%/*}/img-trim.sh
