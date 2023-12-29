@@ -53,7 +53,7 @@
       // console.log(window.location.href)
       // console.log(window.location.pathname)
 
-      const re = new RegExp("shop\/.*")
+      const re = new RegExp("shop\/(?!category|page).*")
       
       // console.log(re.test(window.location.pathname))
       if (re.test(window.location.pathname) == true) {
