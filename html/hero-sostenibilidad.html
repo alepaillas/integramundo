@@ -1,0 +1,43 @@
+<style>
+    .myParallaxBg {
+        background-image: url(/web/image/8185-96808803/IMG_9245.JPG);
+        margin-left: -15px;
+        margin-right: -15px;
+        height: 30rem;
+        width: auto;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    @media only screen and (min-width: 0px) {
+        .myParallaxBg {
+            background-position: center 100px;
+        }
+    }
+    @media only screen and (min-width: 300px) {
+    }
+    @media only screen and (min-width: 540px) {
+    }
+    @media only screen and (min-width: 768px) {
+        .myParallaxBg {
+            background-position: center -100px;
+        }
+    }
+    @media only screen and (min-width: 992px) {
+    }
+
+    .myParallaxContent {
+        background-color: aqua;
+        width: 20rem;
+    }
+</style>
+
+<div class="myParallaxBg">
+    <div class="myParallaxContent">
+        <h1>mi titulo</h1>
+        <p>mi texto</p>
+    </div>
+</div>

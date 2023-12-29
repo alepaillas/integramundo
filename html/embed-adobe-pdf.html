@@ -1,0 +1,53 @@
+<script src="https://acrobatservices.adobe.com/view-sdk/viewer.js"></script>
+
+<style>
+    @media only screen and (min-width: 0px) {
+        #adobe-dc-view {
+        width: 15rem;
+        }
+    }
+
+    @media only screen and (min-width: 300px) {
+        #adobe-dc-view {
+        width: 20rem;
+        }
+    }
+
+    @media only screen and (min-width: 540px) {
+        #adobe-dc-view {
+        width: 30rem;
+        }
+    }
+
+    @media only screen and (min-width: 768px) {
+        #adobe-dc-view {
+        width: 40rem;
+        }
+    }
+
+    @media only screen and (min-width: 992px) {
+        #adobe-dc-view {
+        width: 50rem;
+        }
+    }
+
+    #adobe-dc-view {
+        display: grid;
+        margin: auto;
+        height: 60rem;
+    }
+</style>
+
+<div id="adobe-dc-view"></div>
+
+<script type="text/javascript">
+    document.addEventListener("adobe_dc_view_sdk.ready", function()
+    {;
+        var adobeDCView = new AdobeDC.View({clientId: "1b0202e0f598456e84790808471e93c9", divId: "adobe-dc-view"});
+        adobeDCView.previewFile(
+        {
+            content:  {location: {url: "https://www.integramundo.cl/web/content/14042?unique=02aa96e6d401308cc9a52f0afd3ff9d30823cecb&download=true&access_token=d46c2015-7019-42b6-8426-141c1620d5f0"}},
+            metaData: {fileName: "CAJÓN DE DINERO ONE CD801 FIT 5B8C.pdf"}
+        }, { embedMode: "FULL_WINDOW", defaultViewMode: "FIT_PAGE", showAnnotationTools: false, showDownloadPDF: true });
+    });
+</script>

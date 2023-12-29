@@ -1,0 +1,159 @@
+<style>
+  .top-bar {
+      background: #333;
+      color: #fff;
+      padding: 1rem;
+  }
+
+  .btn {
+      background: coral;
+      color: #fff;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 0.7rem 2rem;
+  }
+
+  .btn:hover {
+      opacity: 0.9;
+  }
+
+  .page-info {
+      margin-left: 1rem;
+  }
+
+  .error {
+      background: orangered;
+      color: #fff;
+      padding: 1rem;
+  }
+</style>
+
+<div class="top-bar">
+  <button class="btn" id="prev-page">
+    <i class="fas fa-arrow-circle-left"></i> Prev Page
+  </button>
+  <button class="btn" id="next-page">
+    Next Page <i class="fas fa-arrow-circle-right"></i>
+  </button>
+  <span class="page-info">
+    Page <span id="page-num"></span> of <span id="page-count"></span>
+  </span>
+</div>
+
+<canvas id="pdf-render"></canvas>
+
+<!-- <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script> -->
+
+<!-- <script src="https://unpkg.com/browse/pdfjs-dist@4.0.269/build/pdf.mjs"></script> -->
+
+<!-- <script type="module"> import pdfjsDist from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.0.269/+esm' </script> -->
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+
+<script>
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  script.onload = function () {
+      console.log('script loaded');
+      
+      //const url = '../docs/pdf.pdf';
+      const url = 'https://www.integramundo.cl/web/content/14042';
+
+      let pdfDoc = null,
+	  pageNum = 1,
+	  pageIsRendering = false,
+	  pageNumIsPending = null;
+
+      const scale = 1.5,
+	    canvas = document.querySelector('#pdf-render'),
+	    ctx = canvas.getContext('2d');
+
+      console.log(canvas);
+
+      // Render the page
+      const renderPage = num => {
+	  pageIsRendering = true;
+
+	  // Get page
+	  pdfDoc.getPage(num).then(page => {
+	      // Set scale
+	      const viewport = page.getViewport({ scale });
+	      canvas.height = viewport.height;
+	      canvas.width = viewport.width;
+
+	      const renderCtx = {
+		  canvasContext: ctx,
+		  viewport
+	      };
+
+	      page.render(renderCtx).promise.then(() => {
+		  pageIsRendering = false;
+
+		  if (pageNumIsPending !== null) {
+		      renderPage(pageNumIsPending);
+		      pageNumIsPending = null;
+		  }
+	      });
+
+	      // Output current page
+	      document.querySelector('#page-num').textContent = num;
+	  });
+      };
+
+      // Check for pages rendering
+      const queueRenderPage = num => {
+	  if (pageIsRendering) {
+	      pageNumIsPending = num;
+	  } else {
+	      renderPage(num);
+	  }
+      };
+
+      // Show Prev Page
+      const showPrevPage = () => {
+	  if (pageNum <= 1) {
+	      return;
+	  }
+	  pageNum--;
+	  queueRenderPage(pageNum);
+      };
+
+      // Show Next Page
+      const showNextPage = () => {
+	  if (pageNum >= pdfDoc.numPages) {
+	      return;
+	  }
+	  pageNum++;
+	  queueRenderPage(pageNum);
+      };
+
+      // Get Document
+      pdfjsLib
+	  .getDocument(url)
+	  .promise.then(pdfDoc_ => {
+	      pdfDoc = pdfDoc_;
+
+	      document.querySelector('#page-count').textContent = pdfDoc.numPages;
+
+	      renderPage(pageNum);
+	  })
+	  .catch(err => {
+	      // Display error
+	      const div = document.createElement('div');
+	      div.className = 'error';
+	      div.appendChild(document.createTextNode(err.message));
+	      document.querySelector('body').insertBefore(div, canvas);
+	      // Remove top bar
+	      document.querySelector('.top-bar').style.display = 'none';
+	  });
+
+      // Button Events
+      document.querySelector('#prev-page').addEventListener('click', showPrevPage);
+      document.querySelector('#next-page').addEventListener('click', showNextPage);
+  };
+  script.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js";
+  script.async = true;
+
+  document.getElementsByTagName("head")[0].appendChild(script);
+</script>

@@ -1,0 +1,59 @@
+<style>
+  #myPopOver {
+      color: red;
+      position: absolute;
+      bottom: 200px;
+      left: 200px;
+      width: 300px;
+      height: 300px;
+  }
+
+  .displayNone {
+      display: none;
+  }
+</style>
+
+<!-- <div class="myDiv"> -->
+  <!--     <p>my p</p> -->
+
+  <!--     <button class="myButton">click me</button> -->
+  <!-- </div> -->
+
+<div class="displayNone" id="myPopOver">
+  <p>popover p</p>
+</div>
+
+<script>
+  function getOffset(el) {
+      const rect = el.getBoundingClientRect();
+      return {
+	  left: rect.left + window.scrollX,
+	  top: rect.top + window.scrollY
+      };
+  }
+
+  /* function getOffset(element) {
+     let x = element.offsetLeft + document.body.scrollLeft;
+     let y = element.offsetTop + document.body.scrollTop;
+     return {
+     left: x,
+     top: y
+     }
+     } */
+
+  const myPopOver = document.querySelector("#myPopOver")
+  const popOverTarget = document.querySelector(".form-select")
+
+  // myPopOver.style.position = 'absolute';
+  /* myPopOver.style.top = getOffset(popOverTarget).top;
+     myPopOver.style.left = getOffset(popOverTarget).left; */
+  // myPopOver.style.left = 
+
+  // popOverTarget.addEventListener("mouseover", (e) => {
+  //     myPopOver.classList.remove("displayNone")
+  // })
+
+  // popOverTarget.addEventListener("mouseout", (e) => {
+  //     myPopOver.classList.add("displayNone")
+  // })
+</script>

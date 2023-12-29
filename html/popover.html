@@ -1,0 +1,108 @@
+<!-- Popover seleccionar papel etiquetas -->
+<style>
+  #myPopOver {
+      position: absolute;
+      background-color: #feac1c;
+      border: 1px solid #CED4DA;
+      border-radius: 0.25rem;
+      animation-name: popout;
+      animation-duration: 500ms;
+      animation-delay : 1s;
+      animation-iteration-count: 6;
+      animation-direction: alternate;
+      display: flex;
+  }
+  
+  #myPopOver p {
+      margin-bottom: 0;
+      padding: 0.5rem;
+      color: white;
+  }
+
+  #myPopOver .closePopOver {
+    margin: 0.5rem;
+  }
+
+  .myArrow:before {
+      content: "";
+      position: absolute;
+      top: 2.5rem;
+      left: 0.5rem;
+      z-index: 1;
+      border: solid 10px transparent;
+      border-top-color:  #feac1c;
+  }
+
+  @keyframes popout {
+      from {transform: scale(1);}
+      to {transform: scale(1.1);}
+  }
+
+  .displayNone {
+      display: none !important;
+  }
+</style>
+
+<div class="displayNone myArrow" id="myPopOver">
+  <p>Debes seleccionar el tipo de papel.</p>
+  <button type="button" class="btn-close btn-close-white closePopOver" aria-label="Close"></button>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", (e) => {
+      // console.log(window.location.href)
+      // console.log(window.location.pathname)
+
+      const re = new RegExp("shop\/.*")
+      
+      // console.log(re.test(window.location.pathname))
+      if (re.test(window.location.pathname) == true) {
+	  function getOffset(el) {
+	      const rect = el.getBoundingClientRect();
+	      return {
+		  left: rect.left,
+		  top: rect.top
+	      };
+	  }
+	  
+	  const myPopOver = document.querySelector("#myPopOver")
+	  const popOverTarget = document.querySelector(".form-select")
+	  if(popOverTarget == null) return
+	  
+	  myPopOver.classList.remove("displayNone")
+
+	  function positionPopOver() {
+	      myPopOver.style.top = getOffset(popOverTarget).top - 58 + 'px'
+	      myPopOver.style.left = getOffset(popOverTarget).left + 'px'
+	  }
+
+	  positionPopOver()
+	  
+	  const scrollDiv = document.querySelector("#wrapwrap")
+	  scrollDiv.addEventListener("scroll", (event) => {
+	      positionPopOver()
+	  }, { passive: true })
+
+	  // debounce
+	  let timeout
+	  window.addEventListener("resize", (event) => {
+	      timeout !== null && window.cancelAnimationFrame(timeout)
+
+	      timeout = window.requestAnimationFrame(() => {
+		  positionPopOver()
+	      })
+	  }, false)
+
+      const closeButton = document.querySelector("#myPopOver .closePopOver")
+      closeButton.addEventListener("click", () => {
+	      myPopOver.classList.add("displayNone")
+          console.log("click")
+      })
+
+/* 	  setTimeout(() => {
+	      myPopOver.classList.add("displayNone")
+	  }, 15000) */
+      }
+  })
+</script>
+<!-- End popover seleccionar papel etiquetas -->

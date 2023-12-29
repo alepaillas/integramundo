@@ -1,0 +1,103 @@
+<style>
+    @media only screen and (min-width: 0px) {
+        #adobe-dc-view {
+        width: 15rem;
+        height: 30rem;
+        }
+    }
+
+    @media only screen and (min-width: 300px) {
+        #adobe-dc-view {
+        width: 20rem;
+        height:40rem;
+        }
+    }
+
+    @media only screen and (min-width: 540px) {
+        #adobe-dc-view {
+        width: 30rem;
+        height: 60rem;
+        }
+    }
+
+    @media only screen and (min-width: 768px) {
+        #adobe-dc-view {
+        width: 40rem;
+        }
+    }
+
+    @media only screen and (min-width: 992px) {
+        #adobe-dc-view {
+        width: 50rem;
+        }
+    }
+
+    #adobe-dc-view {
+        display: grid;
+        margin: auto;
+    }
+</style>
+
+<div id="adobe-dc-view"></div>
+
+<script>
+    /*
+Copyright 2019 Adobe
+All Rights Reserved.
+
+NOTICE: Adobe permits you to use, modify, and distribute this file in
+accordance with the terms of the Adobe license agreement accompanying
+it. If you have received this file from a source other than Adobe,
+then your use, modification, or distribution of it requires the prior
+written permission of Adobe.
+*/
+
+/* Control the default view mode */
+const viewerConfig = {
+    /* Allowed possible values are "FIT_PAGE", "FIT_WIDTH", "TWO_COLUMN", "TWO_COLUMN_FIT_PAGE" or "". */
+    defaultViewMode: "",
+};
+
+/* Wait for Adobe Acrobat Services PDF Embed API to be ready */
+document.addEventListener("adobe_dc_view_sdk.ready", function () {
+    /* Initialize the AdobeDC View object */
+    var adobeDCView = new AdobeDC.View({
+        /* Pass your registered client id */
+        clientId: "1b0202e0f598456e84790808471e93c9",
+        /* Pass the div id in which PDF should be rendered */
+        divId: "adobe-dc-view",
+    });
+
+    /* Invoke the file preview API on Adobe DC View object */
+    adobeDCView.previewFile({
+        /* Pass information on how to access the file */
+        content: {
+            /* Location of file where it is hosted */
+            location: {
+                url: "https://www.integramundo.cl/web/content/14042",
+                /*
+                If the file URL requires some additional headers, then it can be passed as follows:- */
+                headers: [
+                    {
+                        key: "unique",
+                        value: "02aa96e6d401308cc9a52f0afd3ff9d30823cecb",
+                    },
+                    {
+                        key: "access_token",
+                        value: "d46c2015-7019-42b6-8426-141c1620d5f0",
+                    },
+                    {
+                        key: "download",
+                        value: "true",
+                    }
+                ]
+            },
+        },
+        /* Pass meta data of file */
+        metaData: {
+            /* file name */
+            fileName: "gaveta.pdf"
+        }
+    }, { embedMode: "SIZED_CONTAINER" });
+});
+</script>
