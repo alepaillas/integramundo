@@ -1,0 +1,22 @@
+<!-- cambia el texto en la pagina de compra de NIF a RUT -->
+<script>
+  document.addEventListener("DOMContentLoaded", (e) => {
+    // console.log(window.location.href)
+    // console.log(window.location.pathname)
+
+    const re = new RegExp("shop\/address.*|my\/account.*");
+
+    // console.log(re.test(window.location.pathname))
+    if (re.test(window.location.pathname) == true) {
+      const divVat = document.querySelector("label[for=vat]");
+      if (divVat !== null) {
+        divVat.textContent = "RUT (XXXXXXXX-X)";
+      }
+
+      const divCity = document.querySelector("label[for=city]");
+      if (divCity !== null) {
+        divCity.textContent = "Comuna";
+      }
+    }
+  });
+</script>
