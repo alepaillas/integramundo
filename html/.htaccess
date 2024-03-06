@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Redirect http to https
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Redirect integramundo.cl to www.integramundo.cl
+RewriteCond %{HTTP_HOST} ^integramundo\.cl [NC]
+RewriteRule ^(.*)$ https://www.integramundo.cl/$1 [L,R=301]
+
+#old
+RedirectMatch 301 ^(.*)$ http://www.integramundo.cl/
