@@ -1,0 +1,64 @@
+# cajas
+
+# Empaques:
+[cinta de embalaje]
+[cinta para embalar]
+[cinta para embalar cajas]
+[cinta para cajas de carton]
+[cinta adhesiva para cajas de cartón]
+[cintas para empaque]
+[cinta para cajas de cartón]
+[cintas de empaque]
+[cinta adhesiva para cajas de carton]
+[cinta para sellar cajas de carton]
+[cinta de embalaje transparente 100 metros]
+[cinta de embalaje transparente]
+[cinta de embalaje 48x100]
+[cinta de embalaje de colores]
+[cinta de embalaje cafe]
+[cinta de embalaje color]
+[cinta de embalaje negra]
+[cinta de embalaje amarilla]
+[cinta de embalaje blanca]
+[cinta de embalaje fragil]
+[cinta de embalaje grande]
+[cinta de embalaje papel]
+[cinta de embalaje por caja]
+[cinta de embalaje sodimac]
+[cinta de embalaje tesa]
+
+# dispensador
+[dispensador de cinta de embalaje]
+
+# Mayoristas:
+[cinta de embalaje por mayor]
+[cinta embalaje transparente por mayor]
+[cinta de embalaje personalizada por mayor]
+
+# Personalización:
+[cinta de embalaje impresa]
+[cinta de embalaje personalizada]
+[cinta de empaque personalizada]
+[cinta personalizada para empaque]
+[cinta empaque personalizada]
+[cinta para embalaje personalizada]
+[cinta para empaque personalizada]
+[cinta embalaje personalizada barata]
+[cinta adhesiva con logo impreso]
+[cinta adhesiva impresa personalizada]
+[cintas adhesivas con logo]
+
+#Industriales:
+[cinta de embalaje industrial]
+[cinta para embalar industrial]
+
+# Palabras clave negativas
+
+# Manualidades:
+-[manualidades]
+-[manualidad]
+-[cinta de embalaje comprar]
+-[cinta de embalaje precio]
+-[cinta de embalaje barata]
+-[escolar]
+-[divertido]
