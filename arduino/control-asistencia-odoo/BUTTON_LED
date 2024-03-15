@@ -1,0 +1,18 @@
+#define D3   0  //GPIO0
+#define D2   4  //GPIO2 - TXD1
+
+#define BUTTON_PIN D3 // Pin donde está conectado el botón
+#define BUZZER_PIN D2 // Pin donde está conectado el buzzer
+
+void setup() {
+  pinMode(BUTTON_PIN, INPUT_PULLUP); // Configura el pin del botón como entrada con pull-up interno
+  pinMode(BUZZER_PIN, OUTPUT); // Configura el pin del buzzer como salida
+}
+
+void loop() {
+  digitalWrite(BUZZER_PIN, LOW);
+  if (digitalRead(BUTTON_PIN) == HIGH) { // Si el botón es presionado
+    digitalWrite(BUZZER_PIN, HIGH); // Enciende el buzzer
+    delay(100); // Puedes ajustar la duración del sonido según lo desee
+  }
+} 
