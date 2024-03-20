@@ -26,7 +26,7 @@ const int BOTON = D2;
 const int LED_VERDE = D3;
 const int LED_ROJO = D4;
 
-String modo = "check-in";
+String modo = "check-out";
 bool estadoAnteriorBoton = HIGH; // Estado inicial del botón (no presionado)
 unsigned long ultimaPulsacion = 0;
 unsigned long intervaloDebounce = 100;
@@ -39,7 +39,7 @@ byte nuidPICC[4];
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 String DatoHex;
 const String UserReg_1 = "F3073CF6";
-const String UserReg_2 = "";
+const String UserReg_2 = "766BD999";
 const String UserReg_3 = "";
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -87,6 +87,61 @@ void pulsarBuzzer(int buzzer, int ms) {
   delay(ms);
   digitalWrite(buzzer, HIGH);
   delay(ms);
+}
+
+void registrarUsuario (String DatoHex){
+    if (UserReg_1 == DatoHex) {
+      Serial.println("USUARIO 1 - PUEDE INGRESAR");
+
+      WiFiClientSecure client;
+
+      if ((WiFi.status() == WL_CONNECTED)) {
+
+        client.setTrustAnchors(&cert);
+
+        HTTPClient https;
+
+        Serial.print("[HTTPS] begin...\n");
+
+        if (modo == "check-in") {
+          url = "https://flask-asistencia-odoo.onrender.com/hello/check-in";
+        } else  {
+          url = "https://flask-asistencia-odoo.onrender.com/hello/check-out";
+        }
+
+        if (https.begin(client, url)) { // HTTPS
+
+          Serial.print("[HTTPS] GET...\n");
+          int httpCode = https.GET();
+
+          if (httpCode > 0) {
+            Serial.printf("[HTTPS] GET... code: %d\n", httpCode);
+            if (httpCode == HTTP_CODE_OK ||
+                httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
+              String payload = https.getString();
+              Serial.println(payload);
+              pulsarBuzzer(BUZZER, 150);
+              pulsarBuzzer(BUZZER, 150);
+            }
+          } else {
+            Serial.printf("[HTTPS] GET... failed, error: %s\n",
+                          https.errorToString(httpCode).c_str());
+            pulsarBuzzer(BUZZER, 150);
+            pulsarBuzzer(BUZZER, 150);
+            pulsarBuzzer(BUZZER, 150);
+          }
+
+          https.end();
+        } else {
+          Serial.printf("[HTTPS] Unable to connect\n");
+        }
+      }
+    } else {
+      Serial.println("NO ESTA REGISTRADO - PROHIBIDO EL INGRESO");
+      pulsarBuzzer(BUZZER, 150);
+      pulsarBuzzer(BUZZER, 150);
+      pulsarBuzzer(BUZZER, 150);
+    }
 }
 
 void cambiarModo(int led1, int led2) {
@@ -230,62 +285,9 @@ void loop() {
     Serial.print("Codigo Tarjeta: ");
     Serial.println(DatoHex);
 
-    if (UserReg_1 == DatoHex) {
-      Serial.println("USUARIO 1 - PUEDE INGRESAR");
+    registrarUsuario (DatoHex);
 
-      WiFiClientSecure client;
-
-      if ((WiFi.status() == WL_CONNECTED)) {
-
-        client.setTrustAnchors(&cert);
-
-        HTTPClient https;
-
-        Serial.print("[HTTPS] begin...\n");
-
-        if (modo == "check-in") {
-          url = "https://flask-asistencia-odoo.onrender.com/hello/check-in";
-        } else  {
-          url = "https://flask-asistencia-odoo.onrender.com/hello/check-out";
-        }
-
-        if (https.begin(client, url)) { // HTTPS
-
-          Serial.print("[HTTPS] GET...\n");
-          int httpCode = https.GET();
-
-          if (httpCode > 0) {
-            Serial.printf("[HTTPS] GET... code: %d\n", httpCode);
-            if (httpCode == HTTP_CODE_OK ||
-                httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
-              String payload = https.getString();
-              Serial.println(payload);
-              pulsarBuzzer(BUZZER, 150);
-              pulsarBuzzer(BUZZER, 150);
-            }
-          } else {
-            Serial.printf("[HTTPS] GET... failed, error: %s\n",
-                          https.errorToString(httpCode).c_str());
-            pulsarBuzzer(BUZZER, 150);
-            pulsarBuzzer(BUZZER, 150);
-            pulsarBuzzer(BUZZER, 150);
-          }
-
-          https.end();
-        } else {
-          Serial.printf("[HTTPS] Unable to connect\n");
-        }
-      }
-    } else if (UserReg_2 == DatoHex) {
-      Serial.println("USUARIO 2 - PUEDE INGRESAR");
-    } else if (UserReg_3 == DatoHex) {
-      Serial.println("USUARIO 3 - PUEDE INGRESAR");
-    } else {
-      Serial.println("NO ESTA REGISTRADO - PROHIBIDO EL INGRESO");
-      pulsarBuzzer(BUZZER, 150);
-      pulsarBuzzer(BUZZER, 150);
-      pulsarBuzzer(BUZZER, 150);
-    }
+  
     Serial.println();
   } else {
     Serial.println("Tarjeta leida previamente");
