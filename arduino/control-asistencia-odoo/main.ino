@@ -250,10 +250,10 @@ void loop() {
               Serial.println(payload);
             }
 
-            if (httpCode == HTTP_CODE_OK {
-                  pulsarBuzzer(BUZZER, 300);
-                  pulsarBuzzer(BUZZER, 300);
-                })
+            if (httpCode == HTTP_CODE_OK) {
+              pulsarBuzzer(BUZZER, 300);
+              pulsarBuzzer(BUZZER, 300);
+            }
           } else {
             Serial.printf("[HTTPS] GET... failed, error: %s\n",
                           https.errorToString(httpCode).c_str());
