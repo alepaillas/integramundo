@@ -70,6 +70,8 @@ R9I4LtD+gdwyah617jzV/OeBHRnDJELqYzmp
 const char *ssid = "Integramundo";
 const char *password = "integramundo2023";
 
+String url = "https://flask-asistencia-odoo.onrender.com/hello/paula";
+
 X509List cert(IRG_Root_X1);
 
 void parpadearLed(int pin, int ms) {
@@ -80,9 +82,10 @@ void parpadearLed(int pin, int ms) {
 }
 
 void pulsarBuzzer(int buzzer, int ms) {
-  digitalWrite(buzzer, HIGH);
-  delay(ms);
+  // LOW PRENDER HIGH APAGA
   digitalWrite(buzzer, LOW);
+  delay(ms);
+  digitalWrite(buzzer, HIGH);
   delay(ms);
 }
 
@@ -120,6 +123,9 @@ void setup() {
   pinMode(LED_VERDE, OUTPUT);
   pinMode(LED_ROJO, OUTPUT);
   pinMode(BUZZER, OUTPUT);
+
+  // partir con el buzzer apagado
+  digitalWrite(BUZZER, HIGH);
 
   Serial.begin(115200);
   // Serial.setDebugOutput(true);
@@ -165,12 +171,12 @@ void setup() {
   gmtime_r(&now, &timeinfo);
   Serial.print("Current time: ");
   Serial.print(asctime(&timeinfo));
+
+  // partimos en modo check-in
+  cambiarModo(LED_VERDE, LED_ROJO);
 }
 
 void loop() {
-  // partir con el buzzer apagado
-  digitalWrite(BUZZER, HIGH);
-
   bool estadoBoton = digitalRead(BOTON);
   unsigned long tiempoActual = millis();
 
@@ -213,6 +219,8 @@ void loop() {
       rfid.uid.uidByte[3] != nuidPICC[3]) {
     Serial.println("Se ha detectado una nueva tarjeta.");
 
+    pulsarBuzzer(BUZZER, 150);
+    
     // Store NUID into nuidPICC array
     for (byte i = 0; i < 4; i++) {
       nuidPICC[i] = rfid.uid.uidByte[i];
@@ -224,7 +232,6 @@ void loop() {
 
     if (UserReg_1 == DatoHex) {
       Serial.println("USUARIO 1 - PUEDE INGRESAR");
-      pulsarBuzzer(BUZZER, 300);
 
       WiFiClientSecure client;
 
@@ -235,9 +242,14 @@ void loop() {
         HTTPClient https;
 
         Serial.print("[HTTPS] begin...\n");
-        if (https.begin(client,
-                        "https://flask-asistencia-odoo.onrender.com/hello/"
-                        "paula")) { // HTTPS
+
+        if (modo == "check-in") {
+          url = "https://flask-asistencia-odoo.onrender.com/hello/check-in";
+        } else  {
+          url = "https://flask-asistencia-odoo.onrender.com/hello/check-out";
+        }
+
+        if (https.begin(client, url)) { // HTTPS
 
           Serial.print("[HTTPS] GET...\n");
           int httpCode = https.GET();
@@ -248,16 +260,15 @@ void loop() {
                 httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
               String payload = https.getString();
               Serial.println(payload);
-            }
-
-            if (httpCode == HTTP_CODE_OK) {
-              pulsarBuzzer(BUZZER, 300);
-              pulsarBuzzer(BUZZER, 300);
+              pulsarBuzzer(BUZZER, 150);
+              pulsarBuzzer(BUZZER, 150);
             }
           } else {
             Serial.printf("[HTTPS] GET... failed, error: %s\n",
                           https.errorToString(httpCode).c_str());
-            pulsarBuzzer(BUZZER, 1000);
+            pulsarBuzzer(BUZZER, 150);
+            pulsarBuzzer(BUZZER, 150);
+            pulsarBuzzer(BUZZER, 150);
           }
 
           https.end();
