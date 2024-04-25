@@ -3,7 +3,8 @@
 # AAC_ENCODER=libfdk_aac
 AAC_ENCODER=aac
 
-MP4_ENCODER=libopenh264
+#MP4_ENCODER=libopenh264
+MP4_ENCODER=libx264
 
 AUDIO_PARAMS="-c:a $AAC_ENCODER -profile:a aac_low -b:a 384k"
 #AUDIO_PARAMS="-c:a copy"
@@ -12,7 +13,8 @@ VIDEO_PARAMS="-pix_fmt yuv420p -c:v $MP4_ENCODER -profile:v high -preset slow -c
 CONTAINER_PARAMS="-movflags faststart"
 
 # denoise + sharpen
-FILTERS="hqdn3d , unsharp=3:3:1.5"
+VIDEO_FILTERS="hqdn3d , unsharp=3:3:1.5"
+AUDIO_FILTERS="loudnorm=I=-16:LRA=11:TP=-1.5"
 
 # You need to adjust the GOP length to fit your source video.
 # 60 fps -> -g 30
@@ -23,5 +25,11 @@ FILTERS="hqdn3d , unsharp=3:3:1.5"
 # ffmpeg -i "$1" $AUDIO_PARAMS $VIDEO_PARAMS -vf "hqdn3d" $CONTAINER_PARAMS "$2"
 
 #ffmpeg -framerate 29.97 -pattern_type glob -i "*.png" -i "$1" $AUDIO_PARAMS -shortest $VIDEO_PARAMS -vf "$FILTERS" $CONTAINER_PARAMS "$2"
-ffmpeg -i "$1" $AUDIO_PARAMS $VIDEO_PARAMS -vf "$FILTERS" $CONTAINER_PARAMS "$2"
+#ffmpeg -i "$1" $AUDIO_PARAMS $VIDEO_PARAMS -vf "$FILTERS" $CONTAINER_PARAMS "$2"
 #ffmpeg -framerate 30 -pattern_type glob -i "*.png" $AUDIO_PARAMS -shortest $VIDEO_PARAMS -vf "hqdn3d , unsharp=3:3:1.5" $CONTAINER_PARAMS "$1"
+
+#ffmpeg -i "$1" -c:v copy $AUDIO_PARAMS -af loudnorm=I=-16:LRA=11:TP=-1.5 $CONTAINER_PARAMS "$1"-normalized-audio.mp4
+
+ffmpeg -framerate 29.97 -pattern_type glob -i "*.png" -i audio.flac $AUDIO_PARAMS -af "$AUDIO_FILTERS" -shortest $VIDEO_PARAMS -vf "$VIDEO_FILTERS" $CONTAINER_PARAMS out.mp4
+
+#ffmpeg -i "$1" $VIDEO_PARAMS -vf "$VIDEO_FILTERS" $AUDIO_PARAMS -af "$AUDIO_FILTERS" $CONTAINER_PARAMS "$2"

@@ -2,6 +2,13 @@
 
 # depends on
 # - imagemagick
+# - waifu2x-converter-cpp
+
+#waifu2x="/mnt/usb/work/programas/waifu2x-converter-cpp-win64_v534/waifu2x-converter-cpp.exe"
+#models="/mnt/usb/work/programas/waifu2x-converter-cpp-win64_v534/models_rgb"
+
+#waifu2x="waifu2x-converter-cpp"
+waifu2x="waifu2x-ncnn-vulkan"
 
 # escape bad filenames
 IFS="$(printf '\n\t')"
@@ -19,5 +26,5 @@ mkdir "$wd"/waifu2x
 i=$(echo "${#files[@]}" | bc)
 for ((x=0; x < i; x++)); do
 	echo "Processing ${files[x]}"
-	waifu2x-converter-cpp -i ${files[x]} -o "$wd"/waifu2x/${files[x]}-waifu2x.png
+	$waifu2x -i ${files[x]} -o "$wd"/waifu2x/${files[x]}-waifu2x.png
 done

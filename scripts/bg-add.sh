@@ -22,6 +22,6 @@ for ((x=0; x < i; x++)); do
 	echo "Processing ${files[x]}"
 	#convert -composite -gravity center bg.png "${files[x]}" "${files[x]}-bg.png"
 	#convert -composite -gravity center /mnt/usb/work/img-db/bg.png "${files[x]}" "$wd"/added-bg/"${files[x]}"
-	convert -composite -gravity center /mnt/e/work/img-db/bg.png "${files[x]}" "$wd"/added-bg/"${files[x]}"
-	#convert -composite -gravity center /mnt/e/work/img-db/bg-white.png "${files[x]}" "$wd"/added-bg/"${files[x]}"
+	#convert -composite -gravity center /mnt/e/work/img-db/bg.png "${files[x]}" "$wd"/added-bg/"${files[x]}"
+	convert -composite -gravity center /mnt/e/work/img-db/bg-white.png "${files[x]}" "$wd"/added-bg/"${files[x]}"
 done
