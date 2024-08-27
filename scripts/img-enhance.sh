@@ -23,6 +23,6 @@ for ((x=0; x < i; x++)); do
 	#convert -enhance -equalize -contrast "${files[x]}" "${files[x]}"
 	#convert -auto-gamma -auto-level -normalize "${files[x]}" "${files[x]}"
 	#convert -auto-level "${files[x]}" "$wd"/edited-image/"${files[x]}"
-	convert "${files[x]}" -channel green -evaluate multiply 0.90 +channel -normalize -auto-level -fill khaki1 -colorize 35% -brightness-contrast -20x10 "$wd"/enhanced-image/"${files[x]}"
+	magick "${files[x]}" -channel green -evaluate multiply 0.90 +channel -normalize -auto-level -fill khaki1 -colorize 35% -brightness-contrast -20x10 "$wd"/enhanced-image/"${files[x]}"
 	#convert "${files[x]}" -normalize -auto-level -brightness-contrast -2.5x1.25 "$wd"/enhanced-image/"${files[x]}"
 done

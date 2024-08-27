@@ -18,7 +18,7 @@ mkdir "$wd"/trimmed-img
 i=$(echo "${#files[@]}" | bc)
 
 for ((x=0; x < i; x++)); do
-	echo "Processing ${files[x]}"
+	echo "Trimming blank space from ${files[x]}"
 	#convert "${files[x]}" -fuzz 6% -trim +repage "${files[x]}-trim.png"
-	convert "${files[x]}" -fuzz 6% -trim +repage "$wd"/trimmed-img/"${files[x]}"
+	magick "${files[x]}" -fuzz 6% -trim +repage "$wd"/trimmed-img/"${files[x]}"
 done

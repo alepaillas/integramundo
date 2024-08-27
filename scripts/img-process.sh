@@ -40,9 +40,9 @@ echo "Moving into $(pwd)"
 ${BASH_SOURCE%/*}/img-resize.sh 1500x1500
 cd resized-img
 
-#echo "Moving into $(pwd)"
-#${BASH_SOURCE%/*}/img-enhance.sh
-#cd enhanced-image
+echo "Moving into $(pwd)"
+${BASH_SOURCE%/*}/img-enhance.sh
+cd enhanced-image
 
 echo "Moving into $(pwd)"
 ${BASH_SOURCE%/*}/bg-add.sh

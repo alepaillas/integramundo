@@ -19,7 +19,7 @@ mkdir "$wd"/resized-img
 i=$(echo "${#files[@]}" | bc)
 
 for ((x=0; x < i; x++)); do
-	echo "Processing ${files[x]}"
+	echo "Resizing ${files[x]}"
 	#convert "${files[x]}" -resize 1500x1500 "${files[x]}-1500px.png"
-	convert "${files[x]}" -resize "$1" "$wd"/resized-img/"${files[x]}"
+	magick "${files[x]}" -resize "$1" "$wd"/resized-img/"${files[x]}"
 done

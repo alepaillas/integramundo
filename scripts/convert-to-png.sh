@@ -11,7 +11,7 @@ wd="$(pwd)"
 #echo "$wd"
 
 # bash array
-files=( $(find . -maxdepth 1 -type f ! -name "$controlchars" -iname "*.webp" -o -iname "*.avif" -o -iname "*.jpg" -o -iname "*.jpeg") )
+files=( $(find . -maxdepth 1 -type f ! -name "$controlchars" -iname "*.webp" -o -iname "*.avif" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png") )
 #echo "$files"
 
 mkdir "$wd"/converted-to-png
@@ -19,5 +19,5 @@ mkdir "$wd"/converted-to-png
 i=$(echo "${#files[@]}" | bc)
 for ((x=0; x < i; x++)); do
 	echo "Processing ${files[x]}"
-	convert "${files[x]}" "$wd"/converted-to-png/"${files[x]}".png
+	magick "${files[x]}" "$wd"/converted-to-png/"${files[x]}".png
 done
